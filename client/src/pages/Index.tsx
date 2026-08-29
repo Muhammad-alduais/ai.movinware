@@ -28,7 +28,7 @@ const Index = () => {
       <Navbar />
       <main>
         <Hero />
-        <Marquee items={marqueeItems} className="py-8 bg-gray-50/80 border-y border-gray-100" />
+        <Marquee items={marqueeItems} className="py-6 bg-gray-50/60 border-y border-gray-200/60" />
         <Services />
         <Products />
         <Features />

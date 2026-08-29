@@ -21,7 +21,7 @@ const Features = () => {
     if (cards.length === 0) return;
 
     try {
-      gsap.set(cards, { opacity: 0, y: 50, rotateY: -10 });
+      gsap.set(cards, { opacity: 0, y: 30 });
 
       ScrollTrigger.create({
         trigger: gridRef.current,
@@ -31,9 +31,8 @@ const Features = () => {
           gsap.to(cards, {
             opacity: 1,
             y: 0,
-            rotateY: 0,
             duration: 0.8,
-            stagger: 0.1,
+            stagger: 0.08,
             ease: "expo.out",
           });
         },
@@ -92,25 +91,26 @@ const Features = () => {
 
         <div
           ref={gridRef}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
-          style={{ perspective: "1000px" }}
+          className="divide-y divide-gray-200/70 border-y border-gray-200/70"
         >
           {features.map((feature, index) => (
             <div
               key={index}
-              className="feature-card text-center p-6 rounded-2xl bg-gray-50/80 hover:bg-pulse-50/50 border border-gray-100 hover:border-pulse-200 transition-all duration-500 hover:shadow-lg hover:-translate-y-1"
+              className="feature-card flex items-start gap-5 sm:gap-8 py-8 group"
             >
-              <div className="w-14 h-14 mx-auto mb-5 bg-pulse-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+              <div className="w-14 h-14 flex-shrink-0 bg-pulse-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                 <feature.icon className="w-7 h-7 text-pulse-600" />
               </div>
-              <h3
-                className={`text-lg font-semibold text-gray-900 mb-2 ${language === "ar" ? "font-arabic-heading" : ""}`}
-              >
-                {feature.title}
-              </h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                {feature.description}
-              </p>
+              <div>
+                <h3
+                  className={`text-xl font-semibold text-gray-900 mb-1.5 ${language === "ar" ? "font-arabic-heading" : ""}`}
+                >
+                  {feature.title}
+                </h3>
+                <p className="text-gray-600 leading-relaxed max-w-3xl">
+                  {feature.description}
+                </p>
+              </div>
             </div>
           ))}
         </div>

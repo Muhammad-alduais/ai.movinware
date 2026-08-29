@@ -67,7 +67,7 @@ const Hero = () => {
   return (
     <section
       ref={containerRef}
-      className="relative w-full h-screen min-h-[600px] max-h-[900px] overflow-hidden"
+      className="relative w-full min-h-[max(100svh,600px)] max-h-[900px] overflow-hidden"
     >
       {/* 3D Scene Background — shifted to hide Spline watermark */}
       <div className="absolute inset-0 overflow-hidden">
@@ -85,20 +85,22 @@ const Hero = () => {
       </div>
 
       {/* Gradient overlays for text readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/10 to-black/70" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/25 via-transparent to-black/25" />
+      <div className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[42rem] max-w-full h-52 bg-pulse-500/20 blur-[100px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-48 h-12 bg-gradient-to-t from-black/70 to-transparent pointer-events-none" />
 
       {/* Content overlay */}
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="text-center max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div ref={chipRef}>
-            <div className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-medium bg-white/15 text-white border border-white/20 backdrop-blur-sm mb-6">
+            <div className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-semibold bg-white/10 text-white/90 border border-white/20 backdrop-blur-md mb-6">
               <span>{t("hero.chip")}</span>
             </div>
           </div>
 
           <h1
+            key={language}
             ref={titleRef}
             className={`text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-tight text-white drop-shadow-lg ${language === "ar" ? "font-arabic-heading" : "font-brockmann"}`}
           >
@@ -107,7 +109,12 @@ const Hero = () => {
               .map((line, i) => (
                 <span key={i}>
                   {line}
-                  {i === 0 && <br />}
+                  {i === 0 && (
+                    <>
+                      {" "}
+                      <br />
+                    </>
+                  )}
                 </span>
               ))}
           </h1>
@@ -127,30 +134,31 @@ const Hero = () => {
               className="inline-flex items-center justify-center gap-2 bg-pulse-500 hover:bg-pulse-600 text-white font-medium py-3 px-6 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"
               onClick={() =>
                 document
-                  .getElementById("products")
-                  ?.scrollIntoView({ behavior: "smooth", block: "start" })
-              }
-            >
-              {t("hero.cta")}
-              <ArrowRight className="w-4 h-4" />
-            </MagneticButton>
-            <MagneticButton
-              className="inline-flex items-center justify-center bg-white/15 hover:bg-white/25 text-white font-medium py-3 px-6 rounded-full border border-white/30 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
-              onClick={() =>
-                document
                   .getElementById("contact")
                   ?.scrollIntoView({ behavior: "smooth", block: "start" })
               }
             >
+              {t("hero.cta")}
+              <ArrowRight className="w-4 h-4 [dir='rtl']:rotate-180" />
+            </MagneticButton>
+            <MagneticButton
+              className="inline-flex items-center justify-center gap-2 bg-white/15 hover:bg-white/25 text-white font-medium py-3 px-6 rounded-full border border-white/30 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+              onClick={() =>
+                document
+                  .getElementById("products")
+                  ?.scrollIntoView({ behavior: "smooth", block: "start" })
+              }
+            >
               {t("hero.cta_secondary")}
+              <ArrowRight className="w-4 h-4 [dir='rtl']:rotate-180" />
             </MagneticButton>
           </div>
         </div>
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
-        <span className="text-white/60 text-xs tracking-widest uppercase">Scroll</span>
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce motion-reduce:animate-none">
+        <span className="text-white/60 text-xs tracking-widest uppercase">{t("hero.scroll")}</span>
         <div className="w-5 h-8 rounded-full border-2 border-white/40 flex items-start justify-center p-1">
           <div className="w-1 h-2 bg-white/60 rounded-full" />
         </div>

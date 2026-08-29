@@ -17,7 +17,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const product = getProductById(id || "");
   const heroRef = useRef<HTMLElement>(null);
   const featuresRef = useRef<HTMLDivElement>(null);
@@ -161,8 +161,8 @@ const ProductDetail = () => {
             to="/"
             className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-pulse-600 transition-colors mb-8 group"
           >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            {language === "ar" ? "العودة للرئيسية" : "Back to Home"}
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 [dir='rtl']:rotate-180 transition-transform" />
+            {t("product.back_home")}
           </Link>
 
           <div className="flex items-start gap-6">
@@ -204,7 +204,7 @@ const ProductDetail = () => {
               as="h2"
               className={`text-2xl font-bold text-gray-900 ${language === "ar" ? "font-arabic-heading" : ""}`}
             >
-              {language === "ar" ? "الميزات الرئيسية" : "Key Features"}
+              {t("product.features")}
             </TextReveal>
           </div>
           <div ref={featuresRef} className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -227,23 +227,23 @@ const ProductDetail = () => {
       <section className="py-16 bg-gray-50/50">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center">
-              <Target className="w-5 h-5 text-amber-600" />
+            <div className="w-10 h-10 bg-pulse-100 rounded-xl flex items-center justify-center">
+              <Target className="w-5 h-5 text-pulse-600" />
             </div>
             <TextReveal
               as="h2"
               className={`text-2xl font-bold text-gray-900 ${language === "ar" ? "font-arabic-heading" : ""}`}
             >
-              {language === "ar" ? "حالات الاستخدام" : "Use Cases"}
+              {t("product.use_cases")}
             </TextReveal>
           </div>
           <div ref={useCasesRef} className="grid grid-cols-1 gap-4">
             {content.useCases.map((useCase, i) => (
               <div
                 key={i}
-                className="reveal-card flex items-start gap-3 p-5 rounded-xl bg-white border border-gray-100 hover:border-amber-200 hover:shadow-md transition-all duration-300"
+                className="reveal-card flex items-start gap-3 p-5 rounded-xl bg-white border border-gray-100 hover:border-pulse-200 hover:shadow-md transition-all duration-300"
               >
-                <Lightbulb className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
+                <Lightbulb className="w-5 h-5 text-pulse-500 flex-shrink-0 mt-0.5" />
                 <span className={`text-gray-700 ${language === "ar" ? "font-arabic" : ""}`}>
                   {useCase}
                 </span>
@@ -257,14 +257,14 @@ const ProductDetail = () => {
       <section className="py-16 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
-              <Zap className="w-5 h-5 text-green-600" />
+            <div className="w-10 h-10 bg-pulse-100 rounded-xl flex items-center justify-center">
+              <Zap className="w-5 h-5 text-pulse-600" />
             </div>
             <TextReveal
               as="h2"
               className={`text-2xl font-bold text-gray-900 ${language === "ar" ? "font-arabic-heading" : ""}`}
             >
-              {language === "ar" ? "الفوائد" : "Benefits"}
+              {t("product.benefits")}
             </TextReveal>
           </div>
           <div ref={benefitsRef} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -291,20 +291,18 @@ const ProductDetail = () => {
           <h2
             className={`text-2xl sm:text-3xl font-bold text-white mb-4 ${language === "ar" ? "font-arabic-heading" : "font-brockmann"}`}
           >
-            {language === "ar"
-              ? `مهتم بـ ${content.title}؟`
-              : `Interested in ${content.title}?`}
+            {t("product.cta_title_prefix")}
+            {content.title}
+            {t("product.cta_title_suffix")}
           </h2>
           <p className="text-white/90 mb-8">
-            {language === "ar"
-              ? "تواصل معنا لمعرفة كيف يمكننا تخصيص هذه الحلول لاحتياجات أعمالك."
-              : "Contact us to learn how we can tailor this solution to your business needs."}
+            {t("product.cta_subtitle")}
           </p>
           <Link
             to="/#contact"
             className="inline-flex items-center gap-2 bg-white text-pulse-600 font-semibold py-3.5 px-8 rounded-full hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl"
           >
-            {language === "ar" ? "تواصل معنا" : "Contact Us"}
+            {t("product.cta_button")}
           </Link>
         </div>
       </section>

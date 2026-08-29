@@ -1,61 +1,18 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { products } from "@/data/products";
 import { useLanguage } from "../contexts/LanguageContext";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import TextReveal from "./TextReveal";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const Products = () => {
   const { t, language } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced || !trackRef.current || !scrollContainerRef.current) return;
-
-    const track = trackRef.current;
-    const container = scrollContainerRef.current;
-
-    const getScrollAmount = () => {
-      return track.scrollWidth - container.offsetWidth;
-    };
-
-    try {
-      const tween = gsap.to(track, {
-        x: () => -getScrollAmount(),
-        ease: "none",
-        scrollTrigger: {
-          trigger: container,
-          start: "top 20%",
-          end: () => `+=${getScrollAmount()}`,
-          pin: true,
-          scrub: 1,
-          invalidateOnRefresh: true,
-        },
-      });
-
-      return () => {
-        tween.scrollTrigger?.kill();
-        tween.kill();
-      };
-    } catch (e) {
-      console.warn("Products animation error:", e);
-    }
-  }, []);
 
   return (
-    <section id="products" ref={sectionRef} className="py-20 bg-gray-50/50">
+    <section id="products" ref={sectionRef} className="py-20 bg-gray-50 border-y border-gray-200/60">
       <div className="section-container">
         <div className="text-center mb-14">
-          <div className="pulse-chip mx-auto mb-4">
-            <span>{t("products.section")}</span>
-          </div>
           <TextReveal
             as="h2"
             className={`section-title ${language === "ar" ? "font-arabic-heading" : "font-brockmann"}`}
@@ -66,26 +23,20 @@ const Products = () => {
         </div>
       </div>
 
-      {/* Horizontal scroll gallery */}
-      <div
-        ref={scrollContainerRef}
-        className="overflow-hidden"
-      >
-        <div
-          ref={trackRef}
-          className="flex gap-6 px-8 lg:px-16 w-max"
-        >
+      {/* Product grid */}
+      <div className="section-container">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((product, index) => {
             const content =
               product[language as keyof typeof product.en] || product.en;
             return (
               <div
                 key={product.id}
-                className="group relative bg-white rounded-2xl border border-gray-100 hover:border-pulse-200 overflow-hidden transition-all duration-500 hover:shadow-xl w-[340px] sm:w-[380px] flex-shrink-0"
+                className="group relative bg-white rounded-2xl border border-gray-200/60 hover:border-pulse-200 overflow-hidden transition-all duration-500 shadow-sm hover:shadow-xl"
               >
                 {/* Gradient top bar */}
                 <div
-                  className={`h-1 bg-gradient-to-r ${product.gradient}`}
+                  className={`h-[3px] bg-gradient-to-r ${product.gradient}`}
                 />
 
                 <div className="p-6">
@@ -114,7 +65,7 @@ const Products = () => {
                     {content.techHighlights.slice(0, 3).map((tag, i) => (
                       <span
                         key={i}
-                        className="text-xs font-medium px-2.5 py-1 rounded-full bg-gray-100 text-gray-600 border border-gray-200"
+                        className="text-xs font-medium px-2.5 py-1 rounded-full bg-gray-50 text-gray-600 border border-gray-200/60"
                       >
                         {tag}
                       </span>
@@ -127,7 +78,7 @@ const Products = () => {
                     className="inline-flex items-center gap-1.5 text-pulse-600 text-sm font-medium hover:text-pulse-700 transition-colors group/btn"
                   >
                     {t("products.learn_more")}
-                    <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform" />
+                    <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 [dir='rtl']:rotate-180 [dir='rtl']:group-hover/btn:-translate-x-0.5 transition-transform" />
                   </Link>
                 </div>
               </div>

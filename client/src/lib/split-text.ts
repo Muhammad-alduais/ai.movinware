@@ -11,9 +11,12 @@ export function splitText(
 ): SplitTextResult {
   const originalHTML = element.innerHTML;
   const text = element.textContent || "";
-  const includeChars = types.includes("chars");
-  const includeWords = types.includes("words");
-  const includeLines = types.includes("lines");
+  const hasArabic = /[\u0600-\u06FF]/.test(text);
+  const types_ = hasArabic ? types.replace("chars", "").trim() : types;
+  const includeChars =
+    !hasArabic && (types_.includes("chars") || types_.length === 0);
+  const includeWords = types_.includes("words") || types_.length === 0;
+  const includeLines = types_.includes("lines");
 
   const words: HTMLElement[] = [];
   const chars: HTMLElement[] = [];

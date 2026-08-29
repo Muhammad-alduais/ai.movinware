@@ -48,7 +48,9 @@ const CTA = () => {
       ref={sectionRef}
       className="py-20 bg-gradient-to-br from-pulse-600 via-pulse-500 to-purple-600 relative overflow-hidden"
     >
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0djZoNnYtNmgtNnptMC0zMHY2aDZ2LTZoLTZ6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-50" />
+      <div className="absolute -top-32 -right-32 w-[28rem] h-[28rem] bg-white/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-40 -left-32 w-[30rem] h-[30rem] bg-pulse-900/40 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0djZoNnYtNmgtNnptMC0zMHY2aDZ2LTZoLTZ6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-40" />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         <div>
@@ -64,7 +66,7 @@ const CTA = () => {
             {t("cta.subtitle")}
           </p>
           <MagneticButton
-            className="inline-flex items-center gap-2 bg-white text-pulse-600 font-semibold py-3.5 px-8 rounded-full hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl"
+            className="inline-flex items-center gap-2 bg-white text-pulse-600 font-semibold py-3.5 px-8 rounded-full hover:bg-gray-50 transition-all duration-300 shadow-xl shadow-pulse-900/20 hover:shadow-2xl active:scale-[0.98] border border-pulse-100/60"
             strength={0.2}
             onClick={() =>
               document
@@ -73,7 +75,7 @@ const CTA = () => {
             }
           >
             {t("cta.button")}
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4 [dir='rtl']:rotate-180" />
           </MagneticButton>
         </div>
       </div>

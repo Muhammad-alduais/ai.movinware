@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Linkedin, Mail, Phone, MapPin } from "lucide-react";
-import { FaFacebook, FaInstagram } from "react-icons/fa";
+import { Linkedin, Mail, Phone, MapPin, Facebook, Instagram } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -62,8 +61,8 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { icon: FaFacebook, href: "#", label: "Facebook" },
-    { icon: FaInstagram, href: "#", label: "Instagram" },
+    { icon: Facebook, href: "#", label: "Facebook" },
+    { icon: Instagram, href: "#", label: "Instagram" },
     { icon: Linkedin, href: "#", label: "LinkedIn" },
   ];
 
@@ -113,13 +112,13 @@ const Footer = () => {
                   "AI-powered solutions designed to transform modern businesses."
                 )}
               </p>
-              <div className="flex space-x-4">
+              <div className="flex gap-4">
                 {socialLinks.map((social, index) => (
                   <a
                     key={index}
                     href={social.href}
                     aria-label={social.label}
-                    className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-pulse-500 transition-all duration-300 hover:scale-110"
+                    className="w-10 h-10 bg-gray-800 border border-gray-700/60 rounded-full flex items-center justify-center hover:bg-pulse-500 hover:border-pulse-400 transition-all duration-300 hover:scale-105"
                   >
                     <social.icon className="w-5 h-5" />
                   </a>
@@ -151,17 +150,17 @@ const Footer = () => {
               </h3>
               <div className="space-y-3">
                 <div className="flex items-center text-gray-300">
-                  <Mail className="w-4 h-4 mr-3 text-pulse-500 flex-shrink-0" />
+                  <Mail className="w-4 h-4 ms-3 text-pulse-500 flex-shrink-0" />
                   <span className="text-sm">info@movinware.com</span>
                 </div>
                 <div className="flex items-center text-gray-300">
-                  <Phone className="w-4 h-4 mr-3 text-pulse-500 flex-shrink-0" />
+                  <Phone className="w-4 h-4 ms-3 text-pulse-500 flex-shrink-0" />
                   <span className="text-sm" dir="ltr">
                     +966 561820949
                   </span>
                 </div>
                 <div className="flex items-center text-gray-300">
-                  <MapPin className="w-4 h-4 mr-3 text-pulse-500 flex-shrink-0" />
+                  <MapPin className="w-4 h-4 ms-3 text-pulse-500 flex-shrink-0" />
                   <span className="text-sm">Online</span>
                 </div>
               </div>

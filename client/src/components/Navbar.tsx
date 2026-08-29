@@ -90,18 +90,18 @@ const Navbar = () => {
             )}>AI</span>
           </a>
 
-          <nav className="hidden lg:flex items-center space-x-1 flex-1 justify-center">
+          <nav className="hidden lg:flex items-center gap-1 flex-1 justify-center">
             <button onClick={scrollToTop} className={cn("modern-nav-link", isScrolled ? "" : "!text-white hover:!bg-white/10")}>{t('nav.home')}</button>
             {navLinks.map((link) => (
               <button key={link.id} onClick={() => scrollTo(link.id)} className={cn("modern-nav-link", isScrolled ? "" : "!text-white hover:!bg-white/10")}>{link.label}</button>
             ))}
           </nav>
 
-          <div className="hidden lg:flex items-center space-x-4 flex-shrink-0">
+          <div className="hidden lg:flex items-center gap-4 flex-shrink-0">
             <LanguageSwitcher scrolled={isScrolled} />
           </div>
 
-          <div className="flex items-center space-x-3 lg:hidden">
+          <div className="flex items-center gap-3 lg:hidden">
             <LanguageSwitcher scrolled={isScrolled} />
             <button
               className={cn(
@@ -129,7 +129,7 @@ const Navbar = () => {
       )}>
         <div className="fixed inset-0 bg-black/30 backdrop-blur-md" onClick={() => setIsMenuOpen(false)} />
         <div className={cn(
-          "fixed top-0 h-screen w-80 max-w-[85vw] bg-white/95 backdrop-blur-xl shadow-2xl z-[10000] transition-all duration-500",
+          "fixed top-0 h-[100dvh] w-80 max-w-[85vw] bg-white/95 backdrop-blur-xl shadow-2xl z-[10000] transition-all duration-500",
           language === 'ar' ? 'left-0' : 'right-0',
           isMenuOpen ? "translate-x-0 opacity-100" : (language === 'ar' ? "-translate-x-full" : "translate-x-full") + " opacity-0"
         )}>

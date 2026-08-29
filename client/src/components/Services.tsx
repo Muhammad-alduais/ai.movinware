@@ -55,25 +55,21 @@ const Services = () => {
       icon: Brain,
       title: t("services.consulting.title"),
       description: t("services.consulting.description"),
-      color: "bg-pulse-100 text-pulse-600",
     },
     {
       icon: Code,
       title: t("services.custom.title"),
       description: t("services.custom.description"),
-      color: "bg-blue-100 text-blue-600",
     },
     {
       icon: Plug,
       title: t("services.integration.title"),
       description: t("services.integration.description"),
-      color: "bg-purple-100 text-purple-600",
     },
     {
       icon: Zap,
       title: t("services.automation.title"),
       description: t("services.automation.description"),
-      color: "bg-amber-100 text-amber-600",
     },
   ];
 
@@ -81,9 +77,6 @@ const Services = () => {
     <section id="services" ref={sectionRef} className="py-20 bg-white">
       <div className="section-container">
         <div className="text-center mb-16">
-          <div className="pulse-chip mx-auto mb-4">
-            <span>{t("services.section")}</span>
-          </div>
           <TextReveal
             as="h2"
             className={`section-title ${language === "ar" ? "font-arabic-heading" : "font-brockmann"}`}
@@ -99,10 +92,10 @@ const Services = () => {
           {services.map((service, index) => (
             <div
               key={index}
-              className="service-card group p-8 rounded-2xl border border-gray-100 hover:border-pulse-200 bg-white hover:bg-pulse-50/30 transition-all duration-500 hover:shadow-lg hover:-translate-y-1"
+              className="service-card group p-8 rounded-2xl border border-gray-200/60 hover:border-pulse-200 bg-white hover:bg-pulse-50/30 transition-all duration-500 shadow-sm hover:shadow-xl hover:-translate-y-1"
             >
               <div
-                className={`w-12 h-12 rounded-xl ${service.color} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300`}
+                className={`w-12 h-12 rounded-xl bg-pulse-100 text-pulse-600 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300`}
               >
                 <service.icon className="w-6 h-6" />
               </div>

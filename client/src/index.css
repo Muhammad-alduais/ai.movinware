@@ -2,14 +2,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800&display=swap');
 
-@font-face {
-  font-family: 'Brockmann';
-  src: url('/brockmann-medium-webfont.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -40,7 +32,7 @@
   }
 
   .font-brockmann {
-    font-family: 'Brockmann', 'Inter', sans-serif;
+    font-family: 'Inter', sans-serif;
   }
 
   .font-inter {
@@ -67,15 +59,33 @@
     text-align: right;
     direction: rtl;
   }
+
+  /* Keyboard focus ring (links & buttons) — inputs/textarea keep their own focus:ring */
+  a:focus-visible,
+  button:focus-visible,
+  [role="button"]:focus-visible,
+  summary:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px hsl(245 83% 58%);
+  }
+
+  input::placeholder,
+  textarea::placeholder,
+  select::placeholder {
+    color: #6b7280;
+    opacity: 1;
+  }
 }
 
 @layer components {
   .pulse-chip {
-    @apply inline-flex items-center px-4 py-1.5 rounded-full text-xs font-medium bg-pulse-100 text-pulse-600 border border-pulse-200;
+    @apply inline-flex items-center px-4 py-1.5 rounded-full text-xs font-semibold bg-pulse-50 text-pulse-700 border border-pulse-200/80 shadow-sm shadow-pulse-500/5;
   }
 
   .section-container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20;
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 
   .section-title {
@@ -87,15 +97,15 @@
   }
 
   .button-primary {
-    @apply bg-pulse-500 hover:bg-pulse-600 text-white font-medium py-3 px-6 rounded-full transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-[1.02] active:scale-[0.98];
+    @apply bg-pulse-500 hover:bg-pulse-600 text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-[1.02] active:scale-[0.98];
   }
 
   .button-secondary {
-    @apply bg-transparent border border-gray-300 hover:border-pulse-500 text-gray-800 hover:text-pulse-500 font-medium py-3 px-6 rounded-full transition-all duration-300;
+    @apply bg-transparent border border-pulse-200 text-pulse-700 hover:bg-pulse-50 hover:border-pulse-300 font-semibold py-3 px-6 rounded-full transition-all duration-300;
   }
 
   .modern-nav-link {
-    @apply relative px-3 py-2 text-sm text-gray-700 hover:text-pulse-600 font-medium transition-all duration-300 rounded-lg hover:bg-white/60;
+    @apply relative px-3 py-2 text-sm text-gray-700 hover:text-pulse-700 font-medium transition-all duration-300 rounded-lg hover:bg-pulse-50;
   }
 
   .glass-card {

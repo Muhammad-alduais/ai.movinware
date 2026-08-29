@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 interface LanguageContextType {
   language: string;
@@ -21,8 +21,9 @@ const translations = {
     'hero.chip': 'AI Solutions & Services',
     'hero.title': 'Intelligent AI Solutions\nfor Modern Business',
     'hero.subtitle': 'Transform your business with cutting-edge artificial intelligence. From custom AI development to intelligent automation, we build solutions that learn, adapt, and drive growth.',
-    'hero.cta': 'Explore Our AI',
-    'hero.cta_secondary': 'View Solutions',
+    'hero.cta': 'Start Your Project',
+    'hero.cta_secondary': 'Explore Our AI',
+    'hero.scroll': 'Scroll',
 
     'services.section': 'Our Services',
     'services.title': 'AI Services Tailored\nfor Your Success',
@@ -60,6 +61,15 @@ const translations = {
 
     'products.learn_more': 'Learn More',
     'products.built_with': 'Built with',
+
+    'product.back_home': 'Back to Home',
+    'product.features': 'Key Features',
+    'product.use_cases': 'Use Cases',
+    'product.benefits': 'Benefits',
+    'product.cta_title_prefix': 'Interested in ',
+    'product.cta_title_suffix': '?',
+    'product.cta_subtitle': 'Contact us to learn how we can tailor this solution to your business needs.',
+    'product.cta_button': 'Contact Us',
 
     'features.section': 'Why MovinWare AI',
     'features.title': 'Built Different.\nBuilt Better.',
@@ -128,10 +138,11 @@ const translations = {
     'nav.open': 'فتح القائمة',
 
     'hero.chip': 'حلول وخدمات الذكاء الاصطناعي',
-    'hero.title': 'حلول ذكاء اصطناعي ذكية\nللأعمال الحديثة',
+    'hero.title': 'حلول ذكاء اصطناعي\nللأعمال الحديثة',
     'hero.subtitle': ' حوّل أعمالك بأحدث تقنيات الذكاء الاصطناعي. من تطوير حلول الذكاء الاصطناعي المخصصة إلى الأتمتة الذكية، نبني حلولًا تتعلم وتتكيف وتدفع النمو.',
-    'hero.cta': 'استكشف حلولنا',
-    'hero.cta_secondary': 'عرض الحلول',
+    'hero.cta': 'ابدأ مشروعك',
+    'hero.cta_secondary': 'استكشف حلولنا',
+    'hero.scroll': 'مرر',
 
     'services.section': 'خدماتنا',
     'services.title': 'خدمات ذكاء اصطناعي\nمصممة لنجاحك',
@@ -169,6 +180,15 @@ const translations = {
 
     'products.learn_more': 'اعرف المزيد',
     'products.built_with': 'مبنية بـ',
+
+    'product.back_home': 'العودة للرئيسية',
+    'product.features': 'الميزات الرئيسية',
+    'product.use_cases': 'حالات الاستخدام',
+    'product.benefits': 'الفوائد',
+    'product.cta_title_prefix': 'مهتم بـ ',
+    'product.cta_title_suffix': '؟',
+    'product.cta_subtitle': 'تواصل معنا لمعرفة كيف يمكننا تخصيص هذه الحلول لاحتياجات أعمالك.',
+    'product.cta_button': 'تواصل معنا',
 
     'features.section': 'لماذا MovinWare AI',
     'features.title': 'مختلف.\nأفضل.',
@@ -231,7 +251,19 @@ const translations = {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [language, setLanguage] = useState('en');
+  const [language, setLanguageState] = useState<string>(() => {
+    return localStorage.getItem("mw-lang") === "ar" ? "ar" : "en";
+  });
+
+  const setLanguage = (lang: string) => {
+    localStorage.setItem("mw-lang", lang);
+    setLanguageState(lang);
+  };
+
+  useEffect(() => {
+    document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
+    document.documentElement.lang = language;
+  }, [language]);
 
   const t = (key: string): string | string[] => {
     const result = translations[language as keyof typeof translations]?.[key as keyof typeof translations.en];

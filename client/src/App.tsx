@@ -8,8 +8,21 @@ import GrainOverlay from "./components/GrainOverlay";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motion, useScroll } from "framer-motion";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const ScrollProgress = () => {
+  const { scrollYProgress } = useScroll();
+
+  return (
+    <motion.div
+      aria-hidden="true"
+      className="fixed top-0 inset-x-0 h-[2px] origin-left [dir='rtl']:origin-right bg-pulse-500 z-[70]"
+      style={{ scaleX: scrollYProgress }}
+    />
+  );
+};
 
 const PageTransitionInner = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
@@ -72,6 +85,7 @@ const PageTransitionInner = ({ children }: { children: React.ReactNode }) => {
 const App = () => {
   return (
     <ErrorBoundary>
+      <ScrollProgress />
       <CustomCursor />
       <GrainOverlay />
       <SmoothScroll>

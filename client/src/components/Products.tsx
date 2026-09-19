@@ -1,89 +1,92 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
 import { products } from "@/data/products";
 import { useLanguage } from "../contexts/LanguageContext";
-import TextReveal from "./TextReveal";
+import { GridPattern } from "@/components/magicui/grid-pattern";
 
 const Products = () => {
   const { t, language } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
 
   return (
-    <section id="products" ref={sectionRef} className="py-20 bg-gray-50 border-y border-gray-200/60">
-      <div className="section-container">
-        <div className="text-center mb-14">
-          <TextReveal
-            as="h2"
-            className={`section-title ${language === "ar" ? "font-arabic-heading" : "font-brockmann"}`}
-          >
-            {String(t("products.title")).split("\n").join(" ")}
-          </TextReveal>
-          <p className="section-subtitle mx-auto">{t("products.subtitle")}</p>
+    <section id="products" ref={sectionRef} className="relative py-20 lg:py-28 bg-paper-deep/60">
+      {/* Dot grid pattern */}
+      <GridPattern
+        width={44}
+        height={44}
+        strokeDasharray="2 3"
+        className="pointer-events-none absolute inset-0 stroke-rule/60 [mask-image:radial-gradient(50rem_circle_at_25%_-6rem,white,transparent)]"
+      />
+
+      <div className="relative section-container">
+        {/* Section header */}
+        <div className="flex items-center gap-3 mb-4">
+          <span className="section-idx">§ 02</span>
+          <div className="flex-1 h-px bg-rule" />
         </div>
-      </div>
+        <div className="mb-14">
+          <h2 className={`font-display text-3xl sm:text-4xl lg:text-[2.75rem] font-bold tracking-tight text-ink leading-tight ${language === "ar" ? "font-arabic-heading" : ""}`}>
+            {String(t("products.title")).split("\n").join(" ")}
+          </h2>
+          <p className={`mt-4 text-lg text-ink-soft max-w-2xl ${language === "ar" ? "font-arabic" : ""}`}>
+            {t("products.subtitle")}
+          </p>
+          <p className={`mt-3 text-base font-mono text-faint tracking-wider ${language === "ar" ? "font-arabic" : ""}`}>
+            {t("products.tagline")}
+          </p>
+        </div>
 
-      {/* Product grid */}
-      <div className="section-container">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Product grid — 3-across cards */}
+        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {products.map((product, index) => {
-            const content =
-              product[language as keyof typeof product.en] || product.en;
+            const content = product[language as keyof typeof product.en] || product.en;
+            const num = (index + 1).toString().padStart(2, "0");
             return (
-              <div
+              <Link
                 key={product.id}
-                className="group relative bg-white rounded-2xl border border-gray-200/60 hover:border-pulse-200 overflow-hidden transition-all duration-500 shadow-sm hover:shadow-xl"
+                to={`/product/${product.id}`}
+                className="group relative flex flex-col rounded-2xl border border-rule bg-paper-card p-6 transition-all duration-300 hover:border-accent/40 hover:bg-paper-raise/20"
               >
-                {/* Gradient top bar */}
-                <div
-                  className={`h-[3px] bg-gradient-to-r ${product.gradient}`}
-                />
-
-                <div className="p-6">
-                  <div
-                    className={`w-12 h-12 rounded-xl bg-gradient-to-br ${product.gradient} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300`}
-                  >
-                    <product.icon className="w-6 h-6 text-white" />
+                <div className="flex items-start justify-between">
+                  <div className="flex-shrink-0">
+                    <product.icon className="w-7 h-7 text-accent transition-transform duration-300 group-hover:scale-110" />
                   </div>
-
-                  <h3
-                    className={`text-lg font-semibold text-gray-900 mb-1 ${language === "ar" ? "font-arabic-heading" : ""}`}
-                  >
+                  <span className="font-mono text-xs font-medium text-faint transition-colors group-hover:text-accent shrink-0">
+                    {num}
+                  </span>
+                </div>
+                <div className="flex-1 min-w-0 mt-5">
+                  <h3 className={`font-display text-xl font-semibold tracking-tight-display text-ink transition-colors group-hover:text-accent ${language === "ar" ? "font-arabic-heading" : ""}`}>
                     {content.title}
                   </h3>
-                  <p
-                    className={`text-sm font-medium text-pulse-600 mb-3 ${language === "ar" ? "font-arabic" : ""}`}
-                  >
+                  <p className={`mt-1.5 text-sm leading-relaxed text-muted ${language === "ar" ? "font-arabic" : ""}`}>
                     {content.subtitle}
                   </p>
-                  <p className="text-gray-600 text-sm leading-relaxed mb-5 line-clamp-3">
-                    {content.description}
-                  </p>
-
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2 mb-5">
-                    {content.techHighlights.slice(0, 3).map((tag, i) => (
-                      <span
-                        key={i}
-                        className="text-xs font-medium px-2.5 py-1 rounded-full bg-gray-50 text-gray-600 border border-gray-200/60"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* CTA */}
-                  <Link
-                    to={`/product/${product.id}`}
-                    className="inline-flex items-center gap-1.5 text-pulse-600 text-sm font-medium hover:text-pulse-700 transition-colors group/btn"
-                  >
-                    {t("products.learn_more")}
-                    <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 [dir='rtl']:rotate-180 [dir='rtl']:group-hover/btn:-translate-x-0.5 transition-transform" />
-                  </Link>
                 </div>
-              </div>
+                <div className="mt-auto pt-5 flex items-center justify-between">
+                  <span className={`inline-flex items-center gap-1.5 text-sm font-medium text-accent-soft transition-colors group-hover:text-accent ${language === "ar" ? "font-arabic" : ""}`}>
+                    {t("products.know_more")}
+                    <span aria-hidden className="[dir='rtl']:rotate-180">→</span>
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className="font-mono text-[0.7rem] text-faint/70"
+                  >
+                    {num}
+                  </span>
+                </div>
+              </Link>
             );
           })}
+        </div>
+
+        <div className="mt-6 text-right">
+          <Link
+            to="/products"
+            className="text-sm font-medium text-accent-soft transition-colors hover:text-accent"
+          >
+            {t("products.view_all")} <span aria-hidden className="[dir='rtl']:rotate-180">→</span>
+          </Link>
         </div>
       </div>
     </section>

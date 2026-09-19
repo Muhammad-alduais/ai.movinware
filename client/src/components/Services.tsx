@@ -3,7 +3,8 @@ import { Brain, Code, Plug, Zap } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import TextReveal from "./TextReveal";
+import { BentoCard, BentoGrid } from "@/components/magicui/bento-grid";
+import { GridPattern } from "@/components/magicui/grid-pattern";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,17 +14,14 @@ const Services = () => {
   const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const reduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced || !gridRef.current) return;
 
-    const cards = gridRef.current.querySelectorAll(".service-card");
+    const cards = gridRef.current.querySelectorAll(".bento-card");
     if (cards.length === 0) return;
 
     try {
-      gsap.set(cards, { opacity: 0, y: 60, scale: 0.95 });
-
+      gsap.set(cards, { opacity: 0, y: 50 });
       ScrollTrigger.create({
         trigger: gridRef.current,
         start: "top 80%",
@@ -32,14 +30,12 @@ const Services = () => {
           gsap.to(cards, {
             opacity: 1,
             y: 0,
-            scale: 1,
-            duration: 0.8,
-            stagger: 0.12,
+            duration: 0.7,
+            stagger: 0.1,
             ease: "expo.out",
           });
         },
       });
-
       return () => {
         ScrollTrigger.getAll().forEach((st) => {
           if (st.trigger === gridRef.current) st.kill();
@@ -53,61 +49,70 @@ const Services = () => {
   const services = [
     {
       icon: Brain,
+      eyebrow: t("services.consulting.eyebrow") as string,
       title: t("services.consulting.title"),
       description: t("services.consulting.description"),
     },
     {
       icon: Code,
+      eyebrow: t("services.custom.eyebrow") as string,
       title: t("services.custom.title"),
       description: t("services.custom.description"),
     },
     {
       icon: Plug,
+      eyebrow: t("services.integration.eyebrow") as string,
       title: t("services.integration.title"),
       description: t("services.integration.description"),
     },
     {
       icon: Zap,
+      eyebrow: t("services.automation.eyebrow") as string,
       title: t("services.automation.title"),
       description: t("services.automation.description"),
     },
   ];
 
   return (
-    <section id="services" ref={sectionRef} className="py-20 bg-white">
-      <div className="section-container">
-        <div className="text-center mb-16">
-          <TextReveal
-            as="h2"
-            className={`section-title ${language === "ar" ? "font-arabic-heading" : "font-brockmann"}`}
-          >
+    <section id="services" ref={sectionRef} className="relative py-20 lg:py-28 bg-[rgb(var(--paper))]">
+      {/* Dot grid pattern */}
+      <GridPattern
+        width={44}
+        height={44}
+        strokeDasharray="2 3"
+        className="pointer-events-none absolute inset-0 stroke-rule/60 [mask-image:radial-gradient(50rem_circle_at_25%_-6rem,white,transparent)]"
+      />
+
+      <div className="relative section-container">
+        {/* Section header */}
+        <div className="flex items-center gap-3 mb-4">
+          <span className="section-idx">§ 01</span>
+          <div className="flex-1 h-px bg-[rgb(var(--rule))]" />
+        </div>
+        <div className="mb-14">
+          <h2 className={`font-display text-3xl sm:text-4xl lg:text-[2.75rem] font-bold tracking-tight text-[rgb(var(--ink))] leading-tight ${language === "ar" ? "font-arabic-heading" : ""}`}>
             {String(t("services.title")).split("\n").join(" ")}
-          </TextReveal>
-          <p className="section-subtitle mx-auto">
+          </h2>
+          <p className={`mt-4 text-lg text-[rgb(var(--ink-soft))] max-w-2xl ${language === "ar" ? "font-arabic" : ""}`}>
             {t("services.subtitle")}
           </p>
         </div>
 
-        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Bento cards grid */}
+        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {services.map((service, index) => (
-            <div
+            <BentoCard
               key={index}
-              className="service-card group p-8 rounded-2xl border border-gray-200/60 hover:border-pulse-200 bg-white hover:bg-pulse-50/30 transition-all duration-500 shadow-sm hover:shadow-xl hover:-translate-y-1"
-            >
-              <div
-                className={`w-12 h-12 rounded-xl bg-pulse-100 text-pulse-600 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300`}
-              >
-                <service.icon className="w-6 h-6" />
-              </div>
-              <h3
-                className={`text-xl font-semibold text-gray-900 mb-3 ${language === "ar" ? "font-arabic-heading" : ""}`}
-              >
-                {service.title}
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                {service.description}
-              </p>
-            </div>
+              name={service.title as string}
+              eyebrow={service.eyebrow}
+              description={service.description as string}
+              className="bento-card"
+              background={
+                <div className="w-12 h-12 rounded-xl bg-[rgb(var(--accent-muted))] text-[rgb(var(--accent))] flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                  <service.icon className="w-6 h-6" />
+                </div>
+              }
+            />
           ))}
         </div>
       </div>

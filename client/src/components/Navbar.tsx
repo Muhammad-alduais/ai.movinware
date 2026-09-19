@@ -1,151 +1,169 @@
-import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ChevronDown } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { cn } from "@/lib/utils";
+import { BrandMark } from "./BrandMark";
+import { ThemeToggle } from "./ThemeToggle";
+import { MobileNav } from "./MobileNav";
 
-const LanguageSwitcher = ({ scrolled }: { scrolled: boolean }) => {
+const LanguageSwitcher = () => {
   const { language, setLanguage } = useLanguage();
   return (
     <button
-      onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
-      className={cn(
-        "px-3 py-1.5 rounded-full text-sm font-medium border transition-all duration-300",
-        scrolled
-          ? "border-gray-200 hover:border-pulse-400 hover:bg-pulse-50 text-gray-700"
-          : "border-white/30 hover:border-white/60 hover:bg-white/10 text-white"
-      )}
+      onClick={() => setLanguage(language === "en" ? "ar" : "en")}
+      className="inline-flex h-9 items-center rounded-full border border-rule bg-paper-card px-3.5 font-mono text-xs font-semibold uppercase tracking-widest text-ink-soft transition-colors hover:border-accent/40 hover:text-ink"
       dir="ltr"
+      aria-label="Switch language"
     >
-      {language === 'en' ? 'عربي' : 'EN'}
+      {language === "en" ? "عربي" : "EN"}
     </button>
   );
 };
 
 const Navbar = () => {
-  const { t, language } = useLanguage();
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { t } = useLanguage();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [isMenuOpen]);
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    setIsMenuOpen(false);
-  };
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
 
   const scrollTo = (id: string) => {
+    setMenuOpen(false);
+    if (id === "top") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
     const el = document.getElementById(id);
     if (el) {
-      const offset = window.innerWidth < 768 ? 100 : 80;
-      window.scrollTo({ top: el.offsetTop - offset, behavior: 'smooth' });
+      const offset = 80;
+      window.scrollTo({ top: el.offsetTop - offset, behavior: "smooth" });
     }
-    setIsMenuOpen(false);
   };
 
-  const navLinks = [
-    { label: t('nav.services') as string, id: 'services' },
-    { label: t('nav.products') as string, id: 'products' },
-    { label: t('nav.features') as string, id: 'features' },
-    { label: t('nav.contact') as string, id: 'contact' },
+  const navLink =
+    "text-sm font-medium text-muted transition-colors hover:text-ink";
+
+  const services = [
+    {
+      id: "services",
+      title: t("services.consulting.title") as string,
+      description: t("services.consulting.description") as string,
+    },
+    {
+      id: "services",
+      title: t("services.custom.title") as string,
+      description: t("services.custom.description") as string,
+    },
+    {
+      id: "services",
+      title: t("services.integration.title") as string,
+      description: t("services.integration.description") as string,
+    },
+    {
+      id: "services",
+      title: t("services.automation.title") as string,
+      description: t("services.automation.description") as string,
+    },
+  ];
+
+  const links = [
+    { id: "products", label: t("nav.products") as string },
+    { id: "features", label: t("nav.features") as string },
+    { id: "contact", label: t("nav.contact") as string },
   ];
 
   return (
-    <header className={cn(
-      "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-      isScrolled
-        ? "bg-white/95 backdrop-blur-xl shadow-lg border-b border-gray-100/50"
-        : "bg-transparent"
-    )}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-20 gap-4">
-          <a href="#" className="flex items-baseline gap-2 hover:opacity-80 transition-all duration-300 flex-shrink-0" onClick={(e) => { e.preventDefault(); scrollToTop(); }} dir="ltr">
-            <div className={cn(
-              "w-8 h-8 lg:w-10 lg:h-10 flex-shrink-0 flex items-end",
-              isScrolled ? "text-pulse-500" : "text-white"
-            )}>
-              <svg viewBox="0 0 494.95 492.9" fill="currentColor" className="w-full h-full">
-                <g>
-                  <polygon points="297.32 0 67.34 482.87 0 341.74 162.63 0 297.32 0" />
-                  <polygon points="494.95 178.76 343.02 476.88 332.83 480.38 294.08 387.79 304.42 386.86 408.85 174.5 494.95 178.76" />
-                  <polygon points="402.47 102.46 213.4 488.21 200.41 492.9 148.94 374.77 162.18 373.37 291.99 98.66 402.47 102.46" />
-                </g>
-              </svg>
-            </div>
-            <span className={cn(
-              "text-xl lg:text-2xl font-bold font-glacial leading-none",
-              isScrolled ? "text-gray-900" : "text-white"
-            )}>MovinWare</span>
-            <span className={cn(
-              "text-xs font-medium px-1.5 py-0.5 rounded-full",
-              isScrolled ? "text-pulse-500 bg-pulse-50" : "text-white bg-white/15"
-            )}>AI</span>
-          </a>
+    <header className="sticky top-0 z-40 border-b border-rule/70 bg-paper/70 backdrop-blur-xl">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+        {/* Brand */}
+        <a
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            scrollTo("top");
+          }}
+          className="group flex shrink-0 items-center gap-2"
+          aria-label="MovinWare"
+        >
+          <BrandMark className="size-7 text-accent transition-colors lg:size-8" />
+          <span className="flex items-center gap-1.5">
+            <span className="font-display text-lg font-semibold tracking-tight-display text-ink">
+              MovinWare
+            </span>
+            <span className="rounded bg-accent-muted px-1.5 py-0.5 font-mono text-[0.625rem] font-semibold uppercase tracking-widest text-accent">
+              AI
+            </span>
+          </span>
+        </a>
 
-          <nav className="hidden lg:flex items-center gap-1 flex-1 justify-center">
-            <button onClick={scrollToTop} className={cn("modern-nav-link", isScrolled ? "" : "!text-white hover:!bg-white/10")}>{t('nav.home')}</button>
-            {navLinks.map((link) => (
-              <button key={link.id} onClick={() => scrollTo(link.id)} className={cn("modern-nav-link", isScrolled ? "" : "!text-white hover:!bg-white/10")}>{link.label}</button>
-            ))}
-          </nav>
+        {/* Desktop nav */}
+        <nav className="z-30 hidden items-center gap-1 lg:flex">
+          <button
+            onClick={() => scrollTo("top")}
+            className={cn(navLink, "rounded-full px-3.5 py-2")}
+          >
+            {t("nav.home")}
+          </button>
 
-          <div className="hidden lg:flex items-center gap-4 flex-shrink-0">
-            <LanguageSwitcher scrolled={isScrolled} />
-          </div>
-
-          <div className="flex items-center gap-3 lg:hidden">
-            <LanguageSwitcher scrolled={isScrolled} />
+          {/* Services dropdown */}
+          <div className="group relative">
             <button
-              className={cn(
-                "relative z-[10001] p-2.5 rounded-xl backdrop-blur-sm shadow-md hover:shadow-lg transition-all duration-300",
-                isScrolled
-                  ? "bg-white/80 border border-gray-200/50"
-                  : "bg-white/15 border border-white/30"
-              )}
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              onClick={() => scrollTo("services")}
+              className={cn(navLink, "flex items-center gap-1 rounded-full px-3.5 py-2")}
             >
-              {isMenuOpen ? (
-                <X size={20} className="text-gray-700" />
-              ) : (
-                <Menu size={20} className={isScrolled ? "text-gray-700" : "text-white"} />
-              )}
+              {t("nav.services")}
+              <ChevronDown
+                className="size-3.5 text-faint transition-transform duration-200 group-hover:-rotate-180"
+                strokeWidth={1.8}
+              />
             </button>
+            <div className="invisible absolute left-1/2 top-full z-30 w-72 -translate-x-1/2 pt-3 opacity-0 transition duration-150 group-hover:visible group-hover:opacity-100">
+              <div className="overflow-hidden rounded-2xl border border-rule bg-paper-card/95 shadow-lift backdrop-blur-xl">
+                {services.map((service, index) => (
+                  <button
+                    key={index}
+                    onClick={() => scrollTo(service.id)}
+                    className={cn(
+                      "block w-full px-4 py-3.5 text-left transition-colors hover:bg-paper-raise",
+                      index < services.length - 1 && "border-b border-rule-soft"
+                    )}
+                  >
+                    <span className="block text-sm font-medium text-ink">
+                      {service.title}
+                    </span>
+                    <span className="mt-0.5 line-clamp-2 block text-xs text-faint">
+                      {service.description}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
-      {/* Mobile Menu */}
-      <div className={cn(
-        "fixed inset-0 z-[9999] lg:hidden transition-all duration-500",
-        isMenuOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
-      )}>
-        <div className="fixed inset-0 bg-black/30 backdrop-blur-md" onClick={() => setIsMenuOpen(false)} />
-        <div className={cn(
-          "fixed top-0 h-[100dvh] w-80 max-w-[85vw] bg-white/95 backdrop-blur-xl shadow-2xl z-[10000] transition-all duration-500",
-          language === 'ar' ? 'left-0' : 'right-0',
-          isMenuOpen ? "translate-x-0 opacity-100" : (language === 'ar' ? "-translate-x-full" : "translate-x-full") + " opacity-0"
-        )}>
-          <div className="flex items-center justify-between p-6 border-b border-gray-100/50">
-            <h2 className={`text-lg font-bold text-gray-900 ${language === 'ar' ? 'font-arabic' : 'font-brockmann'}`}>{t('nav.menu')}</h2>
-            <button onClick={() => setIsMenuOpen(false)} className="p-2.5 rounded-xl bg-white/80 shadow-sm border border-gray-200/50">
-              <X size={18} className="text-gray-700" />
+          {links.map((link) => (
+            <button
+              key={link.id}
+              onClick={() => scrollTo(link.id)}
+              className={cn(navLink, "rounded-full px-3.5 py-2")}
+            >
+              {link.label}
             </button>
-          </div>
-          <nav className="p-6 space-y-3">
-            <button onClick={scrollToTop} className="block w-full text-left py-4 px-4 text-gray-700 hover:text-pulse-600 font-medium rounded-xl bg-white/60 border border-gray-100/50 shadow-sm hover:shadow-md transition-all">{t('nav.home')}</button>
-            {navLinks.map((link) => (
-              <button key={link.id} onClick={() => scrollTo(link.id)} className="block w-full text-left py-4 px-4 text-gray-700 hover:text-pulse-600 font-medium rounded-xl bg-white/60 border border-gray-100/50 shadow-sm hover:shadow-md transition-all">{link.label}</button>
-            ))}
-          </nav>
+          ))}
+        </nav>
+
+        {/* Desktop actions */}
+        <div className="hidden items-center gap-1.5 lg:flex">
+          <div className="h-5 w-px bg-rule/70" aria-hidden="true" />
+          <ThemeToggle />
+          <LanguageSwitcher />
         </div>
+
+        {/* Mobile toggle */}
+        <MobileNav open={menuOpen} onClose={() => setMenuOpen(false)} onOpen={() => setMenuOpen(true)} />
       </div>
     </header>
   );

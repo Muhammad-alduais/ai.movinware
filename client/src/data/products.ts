@@ -1,9 +1,9 @@
-import { Bot, FileText, Eye, Brain, BarChart3, MessageSquareMore } from "lucide-react";
+import { MessagesSquare, ScanText, ScanEye, Workflow, ChartLine, SearchCheck } from "lucide-react";
 
 export interface Product {
   id: string;
   icon: any;
-  gradient: string;
+  color: string;
   en: {
     title: string;
     subtitle: string;
@@ -27,8 +27,8 @@ export interface Product {
 export const products: Product[] = [
   {
     id: "movinchat",
-    icon: MessageSquareMore,
-    gradient: "from-blue-500 to-cyan-500",
+    icon: MessagesSquare,
+    color: "bg-indigo-500",
     en: {
       title: "MovinChat",
       subtitle: "AI-Powered Conversational Platform",
@@ -86,8 +86,8 @@ export const products: Product[] = [
   },
   {
     id: "movindoc",
-    icon: FileText,
-    gradient: "from-amber-500 to-orange-500",
+    icon: ScanText,
+    color: "bg-blue-500",
     en: {
       title: "MovinDoc",
       subtitle: "Intelligent Document Processing",
@@ -145,8 +145,8 @@ export const products: Product[] = [
   },
   {
     id: "movinvision",
-    icon: Eye,
-    gradient: "from-rose-500 to-pink-500",
+    icon: ScanEye,
+    color: "bg-violet-500",
     en: {
       title: "MovinVision",
       subtitle: "Computer Vision & Visual Intelligence",
@@ -204,8 +204,8 @@ export const products: Product[] = [
   },
   {
     id: "movinagent",
-    icon: Bot,
-    gradient: "from-pulse-500 to-indigo-600",
+    icon: Workflow,
+    color: "bg-indigo-600",
     en: {
       title: "MovinAgent",
       subtitle: "Autonomous Agentic AI System",
@@ -263,8 +263,8 @@ export const products: Product[] = [
   },
   {
     id: "movinpredict",
-    icon: BarChart3,
-    gradient: "from-violet-500 to-purple-600",
+    icon: ChartLine,
+    color: "bg-sky-500",
     en: {
       title: "MovinPredict",
       subtitle: "Predictive Analytics & Business Intelligence",
@@ -322,8 +322,8 @@ export const products: Product[] = [
   },
   {
     id: "movinsearch",
-    icon: Brain,
-    gradient: "from-emerald-500 to-teal-600",
+    icon: SearchCheck,
+    color: "bg-violet-600",
     en: {
       title: "MovinSearch",
       subtitle: "RAG-Powered Knowledge System",

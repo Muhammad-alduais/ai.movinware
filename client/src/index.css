@@ -38,9 +38,9 @@
 
     /* Font families, exposed as vars so tailwind.config.ts and the
        component-layer utilities share one source of truth. */
-    --font-display: 'Fraunces', Georgia, serif;
-    --font-sans: 'Hanken Grotesk', 'Inter', system-ui, sans-serif;
-    --font-mono: 'JetBrains Mono', 'Menlo', monospace;
+    --font-display: 'Fraunces', 'Cairo', 'Tajawal', Georgia, serif;
+    --font-sans: 'Hanken Grotesk', 'Inter', 'Cairo', 'Tajawal', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Cairo', 'Tajawal', 'Menlo', monospace;
   }
 
   .dark {
@@ -130,6 +130,13 @@
   [dir="rtl"] {
     text-align: right;
     direction: rtl;
+  }
+
+  [dir="rtl"] .kicker,
+  [dir="rtl"] .font-mono,
+  [dir="rtl"] .font-sans {
+    letter-spacing: 0.02em;
+    text-transform: none;
   }
 
   /* ── Focus rings ──────────────────────────────────────────── */

@@ -82,7 +82,7 @@ export const MobileNav = ({ open, onOpen, onClose }: MobileNavProps) => {
             )}
           >
             <div className="flex items-center justify-between border-b border-rule px-6 py-4">
-              <span className="!font-mono text-[0.68rem] uppercase tracking-[0.16em] text-faint">
+              <span className={`text-[0.7rem] text-faint ${language === "ar" ? "font-arabic-heading font-semibold" : "!font-mono uppercase tracking-[0.16em]"}`}>
                 {t("nav.menu")}
               </span>
               <button
@@ -115,7 +115,7 @@ export const MobileNav = ({ open, onOpen, onClose }: MobileNavProps) => {
                   <Languages className="size-4 text-muted" strokeWidth={1.8} />
                   <span className="text-[0.86rem] text-ink">Language</span>
                 </span>
-                <span className="font-mono text-xs uppercase tracking-widest text-ink-soft" dir="ltr">
+                <span className={`text-xs text-ink-soft ${language === "ar" ? "font-arabic-heading" : "font-mono uppercase tracking-widest"}`} dir="ltr">
                   {language === "en" ? "عربي" : "EN"}
                 </span>
               </button>

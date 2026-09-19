@@ -7,6 +7,9 @@ import { GridPattern } from "@/components/magicui/grid-pattern";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Pricing section hidden for now — set to `true` to restore later.
+const SHOW_PRICING = false;
+
 const CTA = () => {
   const { t, language } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
@@ -36,6 +39,8 @@ const CTA = () => {
       console.warn("CTA animation error:", e);
     }
   }, []);
+
+  if (!SHOW_PRICING) return null;
 
   const tiers = [
     {

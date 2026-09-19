@@ -133,7 +133,9 @@ const Hero = () => {
                 document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
               }}
             >
-              {t("hero.cta")}
+              <span className={language === "ar" ? "font-arabic-heading" : ""}>
+                {t("hero.cta")}
+              </span>
               <ArrowRight className="w-4 h-4 [dir='rtl']:rotate-180" />
             </ShimmerCta>
             <MagneticButton
@@ -151,7 +153,7 @@ const Hero = () => {
 
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce motion-reduce:animate-none">
-        <span className="font-mono text-xs text-faint tracking-widest uppercase">{t("hero.scroll")}</span>
+        <span className={`text-xs text-faint ${language === "ar" ? "font-arabic" : "font-mono tracking-widest uppercase"}`}>{t("hero.scroll")}</span>
         <div className="w-5 h-8 rounded-full border-2 border-rule flex items-start justify-center p-1">
           <div className="w-1 h-2 bg-accent rounded-full" />
         </div>

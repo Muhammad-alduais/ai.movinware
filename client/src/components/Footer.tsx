@@ -3,14 +3,17 @@ import { useLanguage } from "../contexts/LanguageContext";
 import { BrandMark } from "./BrandMark";
 
 const Footer = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const safeT = (key: string, fallback: string = key) => {
     const result = t(key);
     return typeof result === "string" ? result : fallback;
   };
 
-  const colHead = "font-mono text-[0.68rem] uppercase tracking-[0.16em] text-faint";
+  const colHead =
+    language === "ar"
+      ? "font-arabic-heading text-[0.85rem] font-semibold text-faint"
+      : "font-mono text-[0.68rem] uppercase tracking-[0.16em] text-faint";
   const colLink = "text-sm text-muted transition-colors hover:text-ink";
 
   const quickLinks = [
@@ -74,7 +77,7 @@ const Footer = () => {
             </p>
             <button
               onClick={() => scrollTo("contact")}
-              className="mt-8 inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-paper transition-colors hover:bg-accent"
+              className={`mt-8 inline-flex items-center gap-2 rounded-full bg-ink px-5 py-3 ${language === "ar" ? "font-arabic-heading text-sm font-semibold" : "font-mono text-[0.72rem] uppercase tracking-[0.14em]"} text-paper transition-colors hover:bg-accent`}
             >
               {safeT("hero.cta", "Start Your Project")}
             </button>

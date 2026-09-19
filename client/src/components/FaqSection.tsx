@@ -17,7 +17,8 @@ const FaqSection = ({ faqs = [] }: FaqSectionProps) => {
     { question: t("faq.q2") as string, answer: t("faq.a2") as string },
     { question: t("faq.q3") as string, answer: t("faq.a3") as string },
     { question: t("faq.q4") as string, answer: t("faq.a4") as string },
-    { question: t("faq.q5") as string, answer: t("faq.a5") as string },
+    // Pricing FAQ hidden for now (kept for future):
+    // { question: t("faq.q5") as string, answer: t("faq.a5") as string },
   ];
 
   const allFaqs = faqs.length > 0 ? faqs : defaultFaqs;

@@ -11,7 +11,7 @@ const LanguageSwitcher = () => {
   return (
     <button
       onClick={() => setLanguage(language === "en" ? "ar" : "en")}
-      className="inline-flex h-9 items-center rounded-full border border-rule bg-paper-card px-3.5 font-mono text-xs font-semibold uppercase tracking-widest text-ink-soft transition-colors hover:border-accent/40 hover:text-ink"
+      className={`inline-flex h-9 items-center rounded-full border border-rule bg-paper-card px-3.5 text-xs font-semibold text-ink-soft transition-colors hover:border-accent/40 hover:text-ink ${language === "en" ? "font-mono uppercase tracking-widest" : "font-arabic-heading"}`}
       dir="ltr"
       aria-label="Switch language"
     >
